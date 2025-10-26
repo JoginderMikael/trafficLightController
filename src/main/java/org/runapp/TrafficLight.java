@@ -29,21 +29,9 @@ public class TrafficLight {
 
     public TimerTask changeState() {
         switch (currentState) {
-            case RED -> {
-                currentState = TrafficLightState.GREEN;
-                break;
-            }
-
-            case GREEN -> {
-                currentState = TrafficLightState.YELLOW;
-                break;
-            }
-
-            case YELLOW -> {
-                currentState = TrafficLightState.RED;
-                break;
-            }
-
+            case RED -> currentState = TrafficLightState.GREEN;
+            case GREEN -> currentState = TrafficLightState.YELLOW;
+            case YELLOW -> currentState = TrafficLightState.RED;
         }
         scheduleNextState();
         return null;
