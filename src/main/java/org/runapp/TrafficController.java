@@ -5,7 +5,7 @@ import java.util.List;
 
 public class TrafficController {
 
-    private List<TrafficLight> lights;
+    private final List<TrafficLight> lights;
 
     public TrafficController() {
         this.lights = new ArrayList<>();

@@ -23,18 +23,22 @@ public class TrafficLight {
 
     private void scheduleNextState() {
         int duration = currentState.getDuration();
-        IO.println(this.name + "is now " + currentState + "for" + duration + "ms");
-        timer.schedule(changeState(), duration);
+        IO.println(this.name + " is now " + currentState + " for " + duration + " ms ");
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                changeState();
+            }
+        }, duration);
     }
 
-    public TimerTask changeState() {
+    public void changeState() {
         switch (currentState) {
             case RED -> currentState = TrafficLightState.GREEN;
             case GREEN -> currentState = TrafficLightState.YELLOW;
             case YELLOW -> currentState = TrafficLightState.RED;
         }
         scheduleNextState();
-        return null;
     }
 
     public void displayState() {
