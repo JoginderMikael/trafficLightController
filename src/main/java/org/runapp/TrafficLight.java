@@ -7,13 +7,13 @@ public class TrafficLight {
 
    private TrafficLightState currentState;
    private final String name;
-   private final Timer timer;
+   //private final Timer timer;
    //private TimerTask task;
 
     public TrafficLight(String name) {
         this.name = name;
         this.currentState = TrafficLightState.RED;
-        this.timer = new Timer();
+       // this.timer = new Timer();
     }
 
     public void start(){
@@ -22,14 +22,30 @@ public class TrafficLight {
     }
 
     private void scheduleNextState() {
+        /*
         int duration = currentState.getDuration();
         IO.println(this.name + " is now " + currentState + " for " + duration + " ms ");
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                changeState();
+                changeState()
             }
         }, duration);
+
+         */
+
+        //By creating a new thread instead
+
+        new Thread(() -> {
+            try {
+                int duration = currentState.getDuration();
+                IO.println(this.name + " is now " + currentState + " for " + duration + " ms ");
+                Thread.sleep(duration);
+                changeState();
+            } catch (InterruptedException e) {
+                IO.println("Timer interrupted: " + e.getMessage());
+            }
+        }).start();
     }
 
     public void changeState() {
@@ -49,4 +65,11 @@ public class TrafficLight {
         return currentState.name();
     }
 
+    public void setCurrentState(TrafficLightState trafficLightState) {
+        this.currentState = trafficLightState;
+    }
+
+    public String getName() {
+        return this.name;
+    }
 }

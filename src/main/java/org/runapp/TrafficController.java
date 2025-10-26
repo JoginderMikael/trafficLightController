@@ -26,13 +26,17 @@ public class TrafficController {
             TrafficLight light1 = lights.get(0);
             TrafficLight light2 = lights.get(1);
 
-            if(light1.getCurrentState().equals("GREEN")){
-                light2.changeState(); // Change to RED
-            } else if (light1.getCurrentState().equals("RED")){
-                light2.changeState(); // Change to GREEN
+            TrafficLightState state1 = TrafficLightState.valueOf(light1.getCurrentState());
+
+            switch (state1) {
+                case RED -> light2.setCurrentState(TrafficLightState.GREEN);
+                case GREEN -> light2.setCurrentState(TrafficLightState.YELLOW);
+                case YELLOW -> light2.setCurrentState(TrafficLightState.RED);
             }
+            System.out.println("Lights synchronized: " + light1.getName() + " = " +
+                    state1 + ", " + light2.getName() + " = " + light2.getCurrentState());
         }
-      //  IO.println("Synchronizing all traffic lights.");
+
     }
 
 }
